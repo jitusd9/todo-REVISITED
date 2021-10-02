@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToDo App Revisited</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Aladin&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+    <div class="container">
+        <h2 class="headline" >To Do list</h2>
+        <div class="input-box">
+            <div class="input">
+                <textarea name="content" id="input" cols="72" rows="6" placeholder="Add new task..."></textarea>
+            </div>
+            <button class="submit-btn" id="submit" type="submit">Submit</button>
+        </div>
+        <div class="todo-list" id="taskList">
+                
+        </div>
+
+        <div class="undo">
+            <div class="deleted">
+                <p> <span>🔥</span> Deleting...</p>
+            </div>
+            <div class="timer">
+                <p>3</p>
+            </div>
+            <div class="revert">
+                <p> <span>♻</span> Undo</p>
+            </div>
+        </div>
+
+    </div>
+    
+    <!-- <div class="dani">
+        <img src="https://fsb.zobj.net/crop.php?r=c30CUPcsJuAtTom7B0rGNTypfbGTfBmfuq319PTe8nsYvTUbn4ksoekcRVfiYYiOF59nmKDRo9Ap5WcrgaZDVSx1_Vq8lXHvVR7nlAkk0V2BU89Xz8cZbUru3PW3B6gsREsffRjEyk7bDD8Dg9vAqOObJZxEf7AVtVDPJV5gu3BEasCEGUkaPBA6x5m0ZO74ifCB3yE6286Q0VAv" alt="img">
+        <p class="msg">Do It Daddy!</p>
+    </div> -->
+    <script src="app.js"></script>
+</body>
+</html>

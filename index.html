@@ -13,6 +13,19 @@
 <body>
     <div class="container">
         <h2 class="headline" >To Do list</h2>
+        <audio id="deleteSound">
+            <source src="beep.wav" type="audio/wav">
+            Your Browser Does not support .WAV audio format
+        </audio>
+        <audio id="taskSound">
+            <source src="success.wav" type="audio/wav">
+            Your Browser Does not support .WAV audio format
+        </audio>
+
+        <div class="pageControls">
+            <p><span>🔊</span></p>
+        </div>
+        
         <div class="input-box">
             <div class="input">
                 <textarea name="content" id="input" cols="72" rows="6" placeholder="Add new task..."></textarea>

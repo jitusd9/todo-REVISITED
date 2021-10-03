@@ -1,3 +1,10 @@
+// music test 
+const taskSound = document.querySelector('#taskSound');
+const deleteSound = document.querySelector('#deleteSound');
+
+
+// main script 
+
 const input = document.querySelector('#input');
 const submit = document.querySelector('#submit');
 const task = document.querySelector('#taskList')
@@ -36,18 +43,15 @@ if(Object.keys(localStorage) != ""){
         let controls = document.createElement('div');
         controls.setAttribute('class', 'controls');
 
-        const spanButtons = ['🔳 mark', '♻', '❌'];
+        const spanButtons = ['🔳 mark', '❌'];
 
-        for(i = 0; i< 3; i++){
+        for(i = 0; i< 2; i++){
             let span = document.createElement('span');
             span.innerText = spanButtons[i];
             if(i === 0){
                 span.setAttribute('class', 'mark');
                 span.setAttribute('title', 'Mark It');
             }else if(i === 1){
-                span.setAttribute('class', 'edit');
-                span.setAttribute('title', 'Edit');
-            }else if(i === 2){
                 span.setAttribute('class', 'delete');
                 span.setAttribute('title', 'Delete It');
             }
@@ -56,23 +60,21 @@ if(Object.keys(localStorage) != ""){
 
         }
 
-                // temporary solution for providing random id to tasktabs
-                // count++;
-        
-                let hrline = document.createElement('hr');
-        
-                tasktab.appendChild(taskTime);
-                tasktab.appendChild(taskText);
-                tasktab.appendChild(hrline);
-                tasktab.appendChild(controls);
-                task.prepend(tasktab);
+        // temporary solution for providing random id to tasktabs
+        // count++;
+
+        let hrline = document.createElement('hr');
+
+        tasktab.appendChild(taskTime);
+        tasktab.appendChild(taskText);
+        tasktab.appendChild(hrline);
+        tasktab.appendChild(controls);
+        task.prepend(tasktab);
 
         // CARD control buttons mark complete and uncomplete function 
         const markBtn = document.querySelector('.mark');
         markBtn.addEventListener('click', toogleIcon);
-        // edit funcion 
-        const editBtn = document.querySelector('.edit');
-        editBtn.addEventListener('click', editTask);
+
         // delete function
         const deleteBtn = document.querySelector('.delete');
         deleteBtn.addEventListener('click', deleteTask);    
@@ -88,6 +90,8 @@ submit.addEventListener('click', displayIt);
 function displayIt(){
     if(input.value != "" || localStorage){
 
+        taskSound.play();
+        
         var today = new Date();
         var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
         // var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
@@ -100,9 +104,7 @@ function displayIt(){
         let storeTimeValue = [dateTime, input.value];
         
         localStorage.setItem(randomKey, JSON.stringify(storeTimeValue));
-
         
-
         let taskTime = document.createElement('p');
         taskTime.setAttribute('class', 'time');
         taskTime.innerText = dateTime;
@@ -118,24 +120,20 @@ function displayIt(){
         let controls = document.createElement('div');
         controls.setAttribute('class', 'controls');
 
-        const spanButtons = ['🔳 mark', '♻', '❌'];
+        const spanButtons = ['🔳 mark', '❌'];
 
-        for(i = 0; i< 3; i++){
+        for(i = 0; i< 2; i++){
             let span = document.createElement('span');
             span.innerText = spanButtons[i];
             if(i === 0){
                 span.setAttribute('class', 'mark');
                 span.setAttribute('title', 'Mark It');
             }else if(i === 1){
-                span.setAttribute('class', 'edit');
-                span.setAttribute('title', 'Edit');
-            }else if(i === 2){
                 span.setAttribute('class', 'delete');
                 span.setAttribute('title', 'Delete It');
             }
 
             controls.appendChild(span);
-
         }
 
         // temporary solution for providing random id to tasktabs
@@ -151,14 +149,14 @@ function displayIt(){
 
         input.value = "";
 
-        // console.log('LocalStorage Length :' , localStorage.length);
+        // console.log('LocalStorage Length :', localStorage.length);
 
         // CARD control buttons mark complete and uncomplete function 
         const markBtn = document.querySelector('.mark');
         markBtn.addEventListener('click', toogleIcon);
-        // edit funcion 
-        const editBtn = document.querySelector('.edit');
-        editBtn.addEventListener('click', editTask);
+        // // edit funcion 
+        // const editBtn = document.querySelector('.edit');
+        // editBtn.addEventListener('click', editTask);
         // delete function
         const deleteBtn = document.querySelector('.delete');
         deleteBtn.addEventListener('click', deleteTask);
@@ -186,31 +184,45 @@ function displayIt(){
         }
     }
         
-    // Edit Function 
-    function editTask(e){
-        alert("feature under maintenace! 😔");
-    }
+    // // Edit Function 
+    // function editTask(e){
+    //     alert("feature under maintenace! 😔");
+    // }
 
     // delete function 
     function deleteTask(e){
         // if(confirm("Are you sure want to delete it?")){
+            deleteSound.play();
             const undoCard = document.querySelector('.undo');
             let deleteId = e.target.parentNode.parentNode;
             console.log(deleteId.id);
-            // // remove from webpage 
-            // deleteId.remove(deleteId);
-            // // remove from localStorage 
-            // localStorage.removeItem(deleteId.id);
+
             undoCard.style.transition = '0.3s';
             undoCard.style.opacity = '1';
             undoCard.style.top = '85%';
             
             const timer = document.querySelector('.timer');
-            var countdown = 3;
+            const deleteText = document.querySelector('.deleted');
+
+            const completeTimer = timer.querySelector('p');
+            const successDelete = deleteText.querySelector('p');
+            const failedUndo = undoCard.querySelector('.revert');
+            var countdown = 2;
             var timerClock = setInterval(() => {
+                completeTimer.innerHTML = countdown; 
                 countdown--;               
-                timer.querySelector('p').innerHTML = countdown; 
-            }, 1500);
+                if(countdown === 0){
+                    successDelete.innerHTML = "<span>✅</span> Deleted";
+                    completeTimer.style.opacity = "0";
+                    failedUndo.style.opacity = "0";
+                };
+            }, 1000);
+            
+            // revert back changes of deleteCard 
+            successDelete.innerHTML = "<span>🔥</span> Deleting...";
+            completeTimer.style.opacity = "1";
+            failedUndo.style.opacity = "1";
+            completeTimer.innerText = "3";
 
             var undoTimer = setTimeout(() => {
                 undoCard.style.transition = '0.3s';
@@ -221,10 +233,12 @@ function displayIt(){
                 // remove from localStorage 
                 localStorage.removeItem(deleteId.id);
                 clearInterval(timerClock);
-            }, 4500);
+            }, 3000);
 
             // clearTimeout with undo button click 
             undoCard.querySelector('.revert').addEventListener('click', (e) => {
+                deleteSound.pause();
+                deleteSound.currentTime = 0;
                 undoCard.style.transition = '0.3s';
                 undoCard.style.opacity = '0';
                 undoCard.style.top = '105%';

@@ -15,6 +15,20 @@ body{
     margin: 0 auto;
 }
 
+/* sound controls  */
+.pageControls{
+    position: absolute;
+    right: 5vw;
+    height: 50px;
+    width: 50px;
+    background: #fff;
+    border-radius: 5px;
+}
+
+.pageControls:hover{
+    cursor: pointer;
+}
+
 .headline{
     margin: 20px;
     text-align: center;
@@ -120,9 +134,6 @@ body{
     opacity: 1;
 }
 
-.controls .edit{
-    opacity: 0;
-}
 
 /* undo card css  */
 .undo{
